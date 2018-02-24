@@ -8,12 +8,65 @@
 
 /* Begin PBXBuildFile section */
 		794A1CBE2040B6860033D60D /* FilesBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = 794A1CBC2040B6860033D60D /* FilesBrowser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		794A1CCF2040B72D0033D60D /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A1CC52040B72D0033D60D /* Transition.swift */; };
+		794A1CD02040B72D0033D60D /* FailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A1CC72040B72D0033D60D /* FailedViewController.swift */; };
+		794A1CD12040B72D0033D60D /* FailedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 794A1CC82040B72D0033D60D /* FailedViewController.xib */; };
+		794A1CD42040B72D0033D60D /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 794A1CCD2040B72D0033D60D /* LoadingViewController.xib */; };
+		794A1CD52040B72D0033D60D /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A1CCE2040B72D0033D60D /* LoadingViewController.swift */; };
+		794A1CD92040B7A00033D60D /* FilesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A1CD72040B7A00033D60D /* FilesTableViewController.swift */; };
+		794A1CE02040B80B0033D60D /* FilesFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A1CDE2040B80B0033D60D /* FilesFlowViewController.swift */; };
+		794A1CF42040B8810033D60D /* FilesProvider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794A1CEC2040B8790033D60D /* FilesProvider.framework */; };
+		794A1CF72040BC3D0033D60D /* FileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A1CF52040BC3D0033D60D /* FileTableViewCell.swift */; };
+		794A1CF82040BC3D0033D60D /* FileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 794A1CF62040BC3D0033D60D /* FileTableViewCell.xib */; };
+		794A1CFA2040C21C0033D60D /* Foundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A1CF92040C21C0033D60D /* Foundation.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		794A1CEB2040B8790033D60D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 794A1CE42040B8790033D60D /* FilesProvider.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 799396671D48B7F600086753;
+			remoteInfo = "FilesProvider iOS";
+		};
+		794A1CED2040B8790033D60D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 794A1CE42040B8790033D60D /* FilesProvider.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 799396751D48B80D00086753;
+			remoteInfo = "FilesProvider OSX";
+		};
+		794A1CEF2040B8790033D60D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 794A1CE42040B8790033D60D /* FilesProvider.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 799396821D48B82700086753;
+			remoteInfo = "FilesProvider tvOS";
+		};
+		794A1CF12040B8790033D60D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 794A1CE42040B8790033D60D /* FilesProvider.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 79D903511FAB647400D61D31;
+			remoteInfo = FilesProviderTests;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		794A1CB92040B6860033D60D /* FilesBrowser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FilesBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		794A1CBC2040B6860033D60D /* FilesBrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilesBrowser.h; sourceTree = "<group>"; };
 		794A1CBD2040B6860033D60D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		794A1CC52040B72D0033D60D /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
+		794A1CC72040B72D0033D60D /* FailedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FailedViewController.swift; sourceTree = "<group>"; };
+		794A1CC82040B72D0033D60D /* FailedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FailedViewController.xib; sourceTree = "<group>"; };
+		794A1CCD2040B72D0033D60D /* LoadingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingViewController.xib; sourceTree = "<group>"; };
+		794A1CCE2040B72D0033D60D /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
+		794A1CD72040B7A00033D60D /* FilesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesTableViewController.swift; sourceTree = "<group>"; };
+		794A1CDE2040B80B0033D60D /* FilesFlowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesFlowViewController.swift; sourceTree = "<group>"; };
+		794A1CE42040B8790033D60D /* FilesProvider.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FilesProvider.xcodeproj; path = ../FileProvider/FilesProvider.xcodeproj; sourceTree = "<group>"; };
+		794A1CF52040BC3D0033D60D /* FileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTableViewCell.swift; sourceTree = "<group>"; };
+		794A1CF62040BC3D0033D60D /* FileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileTableViewCell.xib; sourceTree = "<group>"; };
+		794A1CF92040C21C0033D60D /* Foundation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foundation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -21,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				794A1CF42040B8810033D60D /* FilesProvider.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -31,7 +85,9 @@
 			isa = PBXGroup;
 			children = (
 				794A1CBB2040B6860033D60D /* FilesBrowser */,
+				794A1CE42040B8790033D60D /* FilesProvider.xcodeproj */,
 				794A1CBA2040B6860033D60D /* Products */,
+				794A1CF32040B8810033D60D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -46,10 +102,86 @@
 		794A1CBB2040B6860033D60D /* FilesBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				794A1CC42040B72D0033D60D /* Extension */,
+				794A1CE32040B83A0033D60D /* FilesFlow */,
+				794A1CDD2040B7C40033D60D /* FilesTable */,
+				794A1CC62040B72D0033D60D /* Failed */,
+				794A1CCC2040B72D0033D60D /* Loading */,
+				794A1CD62040B7390033D60D /* Supporting */,
+			);
+			path = FilesBrowser;
+			sourceTree = "<group>";
+		};
+		794A1CC42040B72D0033D60D /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				794A1CC52040B72D0033D60D /* Transition.swift */,
+				794A1CF92040C21C0033D60D /* Foundation.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		794A1CC62040B72D0033D60D /* Failed */ = {
+			isa = PBXGroup;
+			children = (
+				794A1CC72040B72D0033D60D /* FailedViewController.swift */,
+				794A1CC82040B72D0033D60D /* FailedViewController.xib */,
+			);
+			path = Failed;
+			sourceTree = "<group>";
+		};
+		794A1CCC2040B72D0033D60D /* Loading */ = {
+			isa = PBXGroup;
+			children = (
+				794A1CCD2040B72D0033D60D /* LoadingViewController.xib */,
+				794A1CCE2040B72D0033D60D /* LoadingViewController.swift */,
+			);
+			path = Loading;
+			sourceTree = "<group>";
+		};
+		794A1CD62040B7390033D60D /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
 				794A1CBC2040B6860033D60D /* FilesBrowser.h */,
 				794A1CBD2040B6860033D60D /* Info.plist */,
 			);
-			path = FilesBrowser;
+			path = Supporting;
+			sourceTree = "<group>";
+		};
+		794A1CDD2040B7C40033D60D /* FilesTable */ = {
+			isa = PBXGroup;
+			children = (
+				794A1CD72040B7A00033D60D /* FilesTableViewController.swift */,
+				794A1CF52040BC3D0033D60D /* FileTableViewCell.swift */,
+				794A1CF62040BC3D0033D60D /* FileTableViewCell.xib */,
+			);
+			path = FilesTable;
+			sourceTree = "<group>";
+		};
+		794A1CE32040B83A0033D60D /* FilesFlow */ = {
+			isa = PBXGroup;
+			children = (
+				794A1CDE2040B80B0033D60D /* FilesFlowViewController.swift */,
+			);
+			path = FilesFlow;
+			sourceTree = "<group>";
+		};
+		794A1CE52040B8790033D60D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				794A1CEC2040B8790033D60D /* FilesProvider.framework */,
+				794A1CEE2040B8790033D60D /* FilesProvider.framework */,
+				794A1CF02040B8790033D60D /* FilesProvider.framework */,
+				794A1CF22040B8790033D60D /* FilesProviderTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		794A1CF32040B8810033D60D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -109,6 +241,12 @@
 			mainGroup = 794A1CAF2040B6860033D60D;
 			productRefGroup = 794A1CBA2040B6860033D60D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 794A1CE52040B8790033D60D /* Products */;
+					ProjectRef = 794A1CE42040B8790033D60D /* FilesProvider.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				794A1CB82040B6860033D60D /* FilesBrowser */,
@@ -116,11 +254,45 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		794A1CEC2040B8790033D60D /* FilesProvider.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = FilesProvider.framework;
+			remoteRef = 794A1CEB2040B8790033D60D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		794A1CEE2040B8790033D60D /* FilesProvider.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = FilesProvider.framework;
+			remoteRef = 794A1CED2040B8790033D60D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		794A1CF02040B8790033D60D /* FilesProvider.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = FilesProvider.framework;
+			remoteRef = 794A1CEF2040B8790033D60D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		794A1CF22040B8790033D60D /* FilesProviderTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = FilesProviderTests.xctest;
+			remoteRef = 794A1CF12040B8790033D60D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		794A1CB72040B6860033D60D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				794A1CD42040B72D0033D60D /* LoadingViewController.xib in Resources */,
+				794A1CF82040BC3D0033D60D /* FileTableViewCell.xib in Resources */,
+				794A1CD12040B72D0033D60D /* FailedViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +303,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				794A1CCF2040B72D0033D60D /* Transition.swift in Sources */,
+				794A1CF72040BC3D0033D60D /* FileTableViewCell.swift in Sources */,
+				794A1CFA2040C21C0033D60D /* Foundation.swift in Sources */,
+				794A1CE02040B80B0033D60D /* FilesFlowViewController.swift in Sources */,
+				794A1CD92040B7A00033D60D /* FilesTableViewController.swift in Sources */,
+				794A1CD02040B72D0033D60D /* FailedViewController.swift in Sources */,
+				794A1CD52040B72D0033D60D /* LoadingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,8 +438,9 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = FilesBrowser/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/FilesBrowser/Supporting/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mousavian.FilesBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -279,8 +459,9 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = FilesBrowser/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/FilesBrowser/Supporting/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mousavian.FilesBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
