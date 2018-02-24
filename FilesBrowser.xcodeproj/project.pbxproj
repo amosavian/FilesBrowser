@@ -23,6 +23,8 @@
 		794A1D6A2041ADB00033D60D /* FilesFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A1D692041ADB00033D60D /* FilesFlowDelegate.swift */; };
 		794A1D6C2041F0AC0033D60D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 794A1D6B2041F0AC0033D60D /* Assets.xcassets */; };
 		794A1D7C2041FF360033D60D /* FilesProvider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794A1D752041FF2E0033D60D /* FilesProvider.framework */; };
+		794A1D9220420BDC0033D60D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794A1D8D20420BDC0033D60D /* MobileCoreServices.framework */; };
+		794A1D9420420BE20033D60D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794A1D9320420BE20033D60D /* UIKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +77,8 @@
 		794A1D692041ADB00033D60D /* FilesFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesFlowDelegate.swift; sourceTree = "<group>"; };
 		794A1D6B2041F0AC0033D60D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		794A1D6D2041FF2E0033D60D /* FilesProvider.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FilesProvider.xcodeproj; path = FileProvider/FilesProvider.xcodeproj; sourceTree = "<group>"; };
+		794A1D8D20420BDC0033D60D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		794A1D9320420BE20033D60D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +86,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				794A1D9420420BE20033D60D /* UIKit.framework in Frameworks */,
+				794A1D9220420BDC0033D60D /* MobileCoreServices.framework in Frameworks */,
 				794A1D7C2041FF360033D60D /* FilesProvider.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -180,6 +186,8 @@
 		794A1CF32040B8810033D60D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				794A1D9320420BE20033D60D /* UIKit.framework */,
+				794A1D8D20420BDC0033D60D /* MobileCoreServices.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

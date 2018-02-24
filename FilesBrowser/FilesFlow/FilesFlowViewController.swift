@@ -15,6 +15,8 @@ public enum AnchorView {
     indirect case view(view: UIView)
 }
 
+var docic = UIDocumentInteractionController()
+
 public class FilesFlowViewController: UIViewController, FilesViewControllerType, FilesViewControllerDelegate, FileProviderDelegate, FailedViewControllerDelegate {
     
     public enum LoadingStatus {

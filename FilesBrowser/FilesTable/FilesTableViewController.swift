@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MobileCoreServices
 import FilesProvider
 
 class FilesTableViewController: UITableViewController, UITableViewDataSourcePrefetching, FilesViewControllerType {
@@ -113,9 +114,20 @@ class FilesTableViewController: UITableViewController, UITableViewDataSourcePref
         cell.fileName.text = file.name
         cell.fileDescription.text = file.isDirectory ? "Folder" : file.size.formatByte
         let bundle = Bundle(for: FilesTableViewController.self)
-        cell.fileImageView.image = file.isDirectory ?
-            UIImage.init(named: "GeneralFolder", in: bundle, compatibleWith: nil) :
-            UIImage.init(named: "GeneralFile", in: bundle, compatibleWith: nil)
+        if file.isDirectory {
+            cell.fileImageView.image = UIImage.init(named: "GeneralFolder", in: bundle, compatibleWith: nil)
+        } else {
+            cell.fileImageView.image = UIImage.init(named: "GeneralFile", in: bundle, compatibleWith: nil)
+            let fileExtension = (file.name as NSString).pathExtension
+            let uti = (UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension as CFString, nil)?.takeRetainedValue() ?? kUTTypeData) as String
+            docic.name = "dummy"
+            docic.uti = uti
+            if docic.icons.count > 0, let cgimage = docic.icons.last?.cgImage {
+                let nicon = UIImage(cgImage: cgimage)
+                cell.fileImageView.image = nicon
+            }
+        }
+        
         cell.accessoryType = file.isDirectory ? .detailDisclosureButton : .detailButton
         
         if let imageCached = delegate.filesView(self, availabledImageFor: file) {
