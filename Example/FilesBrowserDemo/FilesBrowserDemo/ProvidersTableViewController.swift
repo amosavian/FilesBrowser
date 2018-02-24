@@ -28,6 +28,8 @@ class ProvidersTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
+        navigationItem.title = "Providers"
+        
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
         
@@ -72,9 +74,9 @@ class ProvidersTableViewController: UITableViewController {
             let filesVC = FilesViewController(flowViewController: flowVC)
             self.navigationController?.pushViewController(filesVC, animated: true)
         case WebDAVFileProvider.type:
-            let url = URL(string: "https://dav.box.net/dav/")!
-            let user = "a.mosavian@gmail.com"
-            let pass = "abbmos1"
+            let url: URL? = nil
+            let user: String? = nil
+            let pass: String? = nil
             askCredentials(defaultServer: url, defaultUser: user, defaultPassword: pass, completionHandler: { (url, user, pass) in
                 let credential = !user.isEmpty ? URLCredential(user: user, password: pass, persistence: .forSession) : nil
                 guard let url = url,  let provider = WebDAVFileProvider(baseURL: url, credential: credential) else {

@@ -105,7 +105,9 @@ public class FilesFlowViewController: UIViewController, FilesViewController, Fil
     }
     
     public override func setEditing(_ editing: Bool, animated: Bool) {
-        (currentPresentedController as? UIViewController)?.setEditing(editing, animated: animated)
+        for vc in self.childViewControllers {
+            vc.setEditing(editing, animated: animated)
+        }
         super.setEditing(editing, animated: animated)
     }
     
@@ -150,7 +152,8 @@ public class FilesFlowViewController: UIViewController, FilesViewController, Fil
     
     fileprivate func reloadFiles() {
         guard loadingStatus == .succeed else { return }
-        if let currentPresentedController = currentPresentedController, currentPresentedController.current == current {
+        if let currentPresentedController = currentPresentedController,
+            currentPresentedController.current == current, !files.isEmpty {
             currentPresentedController.files = self.files
         } else {
             togglePresentation(to: nil)

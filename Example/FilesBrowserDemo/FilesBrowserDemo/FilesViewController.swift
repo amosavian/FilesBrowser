@@ -43,7 +43,9 @@ class FilesViewController: UIViewController, FilesFlowControllerDelegate, QLPrev
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
-        flowViewController.setEditing(editing, animated: animated)
+        for vc in self.childViewControllers {
+            vc.setEditing(editing, animated: animated)
+        }
         super.setEditing(editing, animated: animated)
     }
     
