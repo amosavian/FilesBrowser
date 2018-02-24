@@ -9,7 +9,7 @@
 import UIKit
 import FilesProvider
 
-class FilesTableViewController: UITableViewController, UITableViewDataSourcePrefetching, FilesViewController {
+class FilesTableViewController: UITableViewController, UITableViewDataSourcePrefetching, FilesViewControllerType {
     
     unowned var delegate: FilesViewControllerDelegate
     let current: FileObject?
@@ -28,6 +28,32 @@ class FilesTableViewController: UITableViewController, UITableViewDataSourcePref
         set {
             presentingIndexPath.map {
                 self.tableView.scrollToRow(at: $0, at: .top, animated: false)
+            }
+        }
+    }
+    
+    var selectedFiles: [FileObject] {
+        get {
+            return selectedIndices.map({ files[$0] })
+        }
+        set {
+            let selected = newValue.flatMap({ files.index(of: $0) })
+            self.selectedIndices = selected
+        }
+    }
+    
+    var selectedIndices: [Int] {
+        get {
+            return tableView.indexPathsForSelectedRows?.map({ $0.item }) ?? []
+        }
+        set {
+            for itemIndex in 0..<files.count {
+                let indexPath = IndexPath(item: itemIndex, section: 0)
+                if newValue.contains(itemIndex) {
+                    tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+                } else {
+                    tableView.deselectRow(at: indexPath, animated: false)
+                }
             }
         }
     }
@@ -57,6 +83,8 @@ class FilesTableViewController: UITableViewController, UITableViewDataSourcePref
         tableView.register(UINib(nibName: "FileTableViewCell", bundle: bundle), forCellReuseIdentifier: "fileTableCell")
         tableView.estimatedRowHeight = 66
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.allowsMultipleSelection = false
+        tableView.allowsMultipleSelectionDuringEditing = true
         if #available(iOS 10.0, *) {
             tableView.prefetchDataSource = self
         }
@@ -84,6 +112,10 @@ class FilesTableViewController: UITableViewController, UITableViewDataSourcePref
         // Configure the cell...
         cell.fileName.text = file.name
         cell.fileDescription.text = file.isDirectory ? "Folder" : file.size.formatByte
+        let bundle = Bundle(for: FilesTableViewController.self)
+        cell.fileImageView.image = file.isDirectory ?
+            UIImage.init(named: "GeneralFolder", in: bundle, compatibleWith: nil) :
+            UIImage.init(named: "GeneralFile", in: bundle, compatibleWith: nil)
         cell.accessoryType = file.isDirectory ? .detailDisclosureButton : .detailButton
         
         if let imageCached = delegate.filesView(self, availabledImageFor: file) {
@@ -101,6 +133,10 @@ class FilesTableViewController: UITableViewController, UITableViewDataSourcePref
     }
     
     override public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if self.isEditing {
+            return
+        }
+        
         guard let cell = tableView.cellForRow(at: indexPath) else {
             return
         }
@@ -142,6 +178,9 @@ class FilesTableViewController: UITableViewController, UITableViewDataSourcePref
         }
         return actions
     }
+    
+    // MARK: - Toolbar
+    
     /*
     // MARK: - Navigation
 

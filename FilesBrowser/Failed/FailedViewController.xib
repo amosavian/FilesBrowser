@@ -28,7 +28,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vGN-kD-cK7">
-                    <rect key="frame" x="151" y="377" width="72" height="33"/>
+                    <rect key="frame" x="151" y="374" width="72" height="33"/>
                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                     <state key="normal" title="Try Again"/>
                     <connections>
@@ -41,8 +41,8 @@
                 <constraint firstItem="vGN-kD-cK7" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="BVy-YH-4rd"/>
                 <constraint firstItem="bhx-5d-LI6" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="G9l-8f-Yhj"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="bhx-5d-LI6" secondAttribute="trailing" constant="10" id="Io2-0I-3GX"/>
-                <constraint firstItem="vGN-kD-cK7" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" constant="50" id="RI1-nd-WKy"/>
                 <constraint firstItem="bhx-5d-LI6" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="WF8-cx-lRB"/>
+                <constraint firstItem="vGN-kD-cK7" firstAttribute="top" secondItem="bhx-5d-LI6" secondAttribute="bottom" constant="20" id="lxe-RF-gg3"/>
                 <constraint firstItem="bhx-5d-LI6" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="yaQ-Oe-fHL"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

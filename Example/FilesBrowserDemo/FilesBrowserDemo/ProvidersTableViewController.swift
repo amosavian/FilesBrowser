@@ -40,7 +40,11 @@ class ProvidersTableViewController: UITableViewController {
             try? "Hello world!".data(using: .utf8)?.write(to: docURL.appendingPathComponent("Sample File.txt"))
         }
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isToolbarHidden = false
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

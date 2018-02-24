@@ -36,6 +36,13 @@ class FilesViewController: UIViewController, FilesFlowControllerDelegate, QLPrev
         flowViewController.delegate = self
         self.transition(child: flowViewController)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isToolbarHidden = false
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        //navigationController?.isToolbarHidden = true
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -49,18 +56,26 @@ class FilesViewController: UIViewController, FilesFlowControllerDelegate, QLPrev
         super.setEditing(editing, animated: animated)
     }
     
-    func filesFlow(_ filesVC: FilesFlowViewController, presentViewcontroller: UIViewController) {
-        navigationController?.pushViewController(presentViewcontroller, animated: true)
-    }
-    
-    func filesFlow(_ filesVC: FilesFlowViewController, presentFile: FileObject, anchor: AnchorView) {
-        if presentFile.url.isFileURL, QLPreviewController.canPreview(presentFile.url.absoluteURL as QLPreviewItem) {
-            quickLookItems = [(presentFile, anchor)]
+    func filesFlow(_ filesVC: FilesFlowViewController, presentFile file: FileObject, anchor: AnchorView) {
+        if file.isDirectory {
+            let directoryVC = FilesFlowViewController(provider: filesVC.provider, current: file, presentingStyle: filesVC.presentingStyle, delegate: filesVC.delegate)
+            navigationController?.pushViewController(directoryVC, animated: true)
+        } else if file.url.isFileURL, QLPreviewController.canPreview(file.url.absoluteURL as QLPreviewItem) {
+            quickLookItems = [(file, anchor)]
             self.quickLook = QLPreviewController()
             quickLook!.dataSource = self
             self.present(quickLook!, animated: true, completion: nil)
         }
     }
+    
+    func filesFlow(_ filesVC: FilesFlowViewController, selectionChangedTo files: [FileObject]) {
+        //
+    }
+    
+    func filesFlow(_ filesVC: FilesFlowViewController, updateToolbarItems items: [UIBarButtonItem]) {
+        self.setToolbarItems(items, animated: true)
+    }
+
     
     // MARK: - QuickLook
     
