@@ -21,6 +21,17 @@ class FilesTableViewController: UITableViewController, UITableViewDataSourcePref
         }
     }
     
+    var presentingIndexPath: IndexPath? {
+        get {
+            return tableView.indexPathsForVisibleRows?.first
+        }
+        set {
+            presentingIndexPath.map {
+                self.tableView.scrollToRow(at: $0, at: .top, animated: false)
+            }
+        }
+    }
+    
     public init(current: FileObject?, files: [FileObject], delegate: FilesViewControllerDelegate) {
         self.current = current
         self.files = files
@@ -41,7 +52,9 @@ class FilesTableViewController: UITableViewController, UITableViewDataSourcePref
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        tableView.register(FileTableViewCell.self, forCellReuseIdentifier: "fileTableCell")
+        self.title = current?.name
+        let bundle = Bundle(for: FileTableViewCell.self)
+        tableView.register(UINib(nibName: "FileTableViewCell", bundle: bundle), forCellReuseIdentifier: "fileTableCell")
         tableView.estimatedRowHeight = 66
         tableView.rowHeight = UITableViewAutomaticDimension
         if #available(iOS 10.0, *) {
@@ -70,7 +83,8 @@ class FilesTableViewController: UITableViewController, UITableViewDataSourcePref
         
         // Configure the cell...
         cell.fileName.text = file.name
-        cell.fileDescription.text = file.size.formatByte
+        cell.fileDescription.text = file.isDirectory ? "Folder" : file.size.formatByte
+        cell.accessoryType = file.isDirectory ? .detailDisclosureButton : .detailButton
         
         if let imageCached = delegate.filesView(self, availabledImageFor: file) {
             cell.fileImageView.image = imageCached

@@ -22,7 +22,8 @@ class FailedViewController: UIViewController {
     
     init(message: String) {
         self.message = message
-        super.init(nibName: nil, bundle: nil)
+        let bundle = Bundle(for: FailedViewController.self)
+        super.init(nibName: nil, bundle: bundle)
     }
     
     override func viewDidLoad() {

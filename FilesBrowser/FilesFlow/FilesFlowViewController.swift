@@ -18,6 +18,7 @@ public enum AnchorView {
 public protocol FilesViewController: class {
     var current: FileObject? { get }
     var files: [FileObject] { get set }
+    var presentingIndexPath: IndexPath? { get set }
 }
 
 public protocol FilesFlowControllerDelegate: class {
@@ -25,7 +26,7 @@ public protocol FilesFlowControllerDelegate: class {
     func filesFlow(_ filesVC: FilesFlowViewController, presentFile: FileObject, anchor: AnchorView)
 }
 
-public protocol FilesViewControllerDelegate: class {
+internal protocol FilesViewControllerDelegate: class {
     func filesView(_ filesVC: FilesViewController, didSelected file: FileObject, anchor: AnchorView)
     
     func filesView(_ filesVC: FilesViewController, canLoadImageFor file: FileObject) -> Bool
@@ -39,31 +40,43 @@ public protocol FilesViewControllerDelegate: class {
     func filesView(_ filesVC: FilesViewController, move file: FileObject, anchor: AnchorView)
 }
 
-public enum LoadingStatus {
-    case notLoaded
-    case loading
-    case succeed
-    case failed
-}
-
-public enum presentingStyle {
-    case simpleTableView
-}
-
-public class FilesFlowViewController: UIViewController, FilesViewControllerDelegate, FileProviderDelegate, FailedViewControllerDelegate {
+public class FilesFlowViewController: UIViewController, FilesViewController, FilesViewControllerDelegate, FileProviderDelegate, FailedViewControllerDelegate {
+    
+    public enum LoadingStatus {
+        case notLoaded
+        case loading
+        case succeed
+        case failed
+    }
+    
+    public enum PresentingStyle {
+        case simpleTableView
+    }
+    
     public let provider: FileProvider
     public let current: FileObject?
     public weak var delegate: FilesFlowControllerDelegate?
     
+    public var sort: FileObjectSorting?
+    
     public var loadingStatus: LoadingStatus = .notLoaded
     weak var currentPresentedController: FilesViewController?
-    var filesList: [FileObject] = []
+    public var files: [FileObject] = []
     
-    init(provider: FileProvider, current: FileObject?, delegate: FilesFlowControllerDelegate?) {
+    public var presentingStyle: PresentingStyle {
+        didSet {
+            guard oldValue != presentingStyle else { return }
+            self.togglePresentation(to: self.presentingStyle)
+        }
+    }
+    
+    public init(provider: FileProvider, current: FileObject?, presentingStyle: PresentingStyle, delegate: FilesFlowControllerDelegate?) {
         self.provider = provider
         self.current = current
+        self.presentingStyle = presentingStyle
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
+        
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -74,6 +87,13 @@ public class FilesFlowViewController: UIViewController, FilesViewControllerDeleg
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
+        self.title = current?.name
+        view.backgroundColor = .white
+        provider.delegate = self
+    }
+    
+    public override func viewWillAppear(_ animated: Bool) {
         loadFiles()
     }
 
@@ -84,10 +104,24 @@ public class FilesFlowViewController: UIViewController, FilesViewControllerDeleg
         self.imagesCache.removeAll()
     }
     
+    public override func setEditing(_ editing: Bool, animated: Bool) {
+        (currentPresentedController as? UIViewController)?.setEditing(editing, animated: animated)
+        super.setEditing(editing, animated: animated)
+    }
+    
+    public var presentingIndexPath: IndexPath? {
+        get {
+            return currentPresentedController?.presentingIndexPath
+        }
+        set {
+            currentPresentedController?.presentingIndexPath = self.presentingIndexPath
+        }
+    }
+    
     func loadFiles() {
         switch loadingStatus {
         case .notLoaded, .failed:
-            transition(child: LoadingViewController())
+            transition(duration: 0.0, child: LoadingViewController())
             currentPresentedController = nil
         default:
             break
@@ -98,14 +132,17 @@ public class FilesFlowViewController: UIViewController, FilesViewControllerDeleg
             if let error = error {
                 DispatchQueue.main.async {
                     self.loadingStatus = .failed
-                    self.transition(child: FailedViewController(message: error.localizedDescription))
+                    self.transition(duration: 0.0, child: FailedViewController(message: error.localizedDescription))
                     self.currentPresentedController = nil
                 }
+                return
             }
+            
+            let sorted = self.sort?.sort(files) ?? files
             
             DispatchQueue.main.async {
                 self.loadingStatus = .succeed
-                self.filesList = files
+                self.files = sorted
                 self.reloadFiles()
             }
         }
@@ -113,17 +150,31 @@ public class FilesFlowViewController: UIViewController, FilesViewControllerDeleg
     
     fileprivate func reloadFiles() {
         guard loadingStatus == .succeed else { return }
-        if let currentPresentedController = currentPresentedController {
-            currentPresentedController.files = filesList
+        if let currentPresentedController = currentPresentedController, currentPresentedController.current == current {
+            currentPresentedController.files = self.files
         } else {
-            togglePresentation()
+            togglePresentation(to: nil)
         }
     }
     
-    fileprivate func togglePresentation() {
-        let tableVC = FilesTableViewController(current: self.current, files: filesList, delegate: self)
-        self.currentPresentedController = tableVC
-        self.transition(child: tableVC)
+    fileprivate func togglePresentation(to style: PresentingStyle?) {
+        guard !files.isEmpty else {
+            let nofileVC = CommentViewController(message: NSLocalizedString("No file exists.", comment: "Files view"))
+            self.transition(duration: 0.0, child: nofileVC)
+            return
+        }
+        
+        let presentingIndexPath = self.presentingIndexPath
+        switch style {
+        case .simpleTableView?:
+            let tableVC = FilesTableViewController(current: self.current, files: files, delegate: self)
+            self.currentPresentedController = tableVC
+            tableVC.presentingIndexPath = presentingIndexPath
+            self.transition(duration: 0.0, child: tableVC)
+        case .none:
+            togglePresentation(to: self.presentingStyle)
+        }
+        
     }
     
     internal func failedViewControllerTryAgainTapped(_ failedVC: FailedViewController) {
@@ -153,7 +204,7 @@ public class FilesFlowViewController: UIViewController, FilesViewControllerDeleg
     
     public func filesView(_ filesVC: FilesViewController, didSelected file: FileObject, anchor: AnchorView) {
         if file.isDirectory {
-            let directoryVC = FilesFlowViewController(provider: provider, current: file, delegate: delegate)
+            let directoryVC = FilesFlowViewController(provider: provider, current: file, presentingStyle: presentingStyle, delegate: delegate)
             delegate?.filesFlow(self, presentViewcontroller: directoryVC)
         } else {
             delegate?.filesFlow(self, presentFile: file, anchor: anchor)

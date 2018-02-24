@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -13,7 +14,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="66" id="KGk-i7-Jjw" customClass="FileTableViewCell" customModule="FilesBrowser" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="FileTableViewCell" customModule="FilesBrowser" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="66"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -23,12 +24,12 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZcB-Wg-Ml5">
                         <rect key="frame" x="16" y="11" width="44" height="44"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="44" id="RRE-wZ-dkG"/>
-                            <constraint firstAttribute="width" constant="44" id="reZ-P0-64U"/>
+                            <constraint firstAttribute="width" constant="44" id="5zY-f9-9lA"/>
+                            <constraint firstAttribute="width" secondItem="ZcB-Wg-Ml5" secondAttribute="height" multiplier="1:1" id="skK-ZT-7i9"/>
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="dJy-qy-cuJ">
-                        <rect key="frame" x="68" y="11" width="45" height="38.5"/>
+                        <rect key="frame" x="68" y="13.5" width="45" height="38.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K6L-II-6IW">
                                 <rect key="frame" x="0.0" y="0.0" width="45" height="20.5"/>
@@ -44,14 +45,25 @@
                             </label>
                         </subviews>
                     </stackView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mhr-WS-Zuu">
+                        <rect key="frame" x="0.0" y="11" width="1" height="44"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="1" id="Te8-FB-EHO"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="qbE-K2-xOP"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="ZcB-Wg-Ml5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="1dg-rA-S03"/>
-                    <constraint firstItem="ZcB-Wg-Ml5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="L28-uV-vNe"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="mhr-WS-Zuu" secondAttribute="bottom" id="BHO-3a-uhj"/>
+                    <constraint firstItem="mhr-WS-Zuu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="G7T-1G-tBt"/>
+                    <constraint firstItem="mhr-WS-Zuu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="IKK-fy-AoM"/>
+                    <constraint firstItem="mhr-WS-Zuu" firstAttribute="height" relation="greaterThanOrEqual" secondItem="dJy-qy-cuJ" secondAttribute="height" id="M4F-FL-sKs"/>
                     <constraint firstItem="dJy-qy-cuJ" firstAttribute="leading" secondItem="ZcB-Wg-Ml5" secondAttribute="trailing" constant="8" id="MnD-dC-42I"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="ZcB-Wg-Ml5" secondAttribute="bottom" id="NSy-Vo-mv3"/>
-                    <constraint firstItem="dJy-qy-cuJ" firstAttribute="centerY" secondItem="ZcB-Wg-Ml5" secondAttribute="centerY" constant="-2.75" id="Oru-rd-Jej"/>
+                    <constraint firstItem="ZcB-Wg-Ml5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Mri-sa-XgK"/>
                     <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="dJy-qy-cuJ" secondAttribute="trailing" id="VWl-EY-KzQ"/>
+                    <constraint firstItem="dJy-qy-cuJ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="vLP-Ot-G9m"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -60,7 +72,7 @@
                 <outlet property="fileImageView" destination="ZcB-Wg-Ml5" id="SYu-jo-6Am"/>
                 <outlet property="fileName" destination="K6L-II-6IW" id="5hA-0o-GdX"/>
             </connections>
-            <point key="canvasLocation" x="35" y="63"/>
+            <point key="canvasLocation" x="35" y="62"/>
         </tableViewCell>
     </objects>
 </document>

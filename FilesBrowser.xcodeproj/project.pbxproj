@@ -19,6 +19,8 @@
 		794A1CF72040BC3D0033D60D /* FileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A1CF52040BC3D0033D60D /* FileTableViewCell.swift */; };
 		794A1CF82040BC3D0033D60D /* FileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 794A1CF62040BC3D0033D60D /* FileTableViewCell.xib */; };
 		794A1CFA2040C21C0033D60D /* Foundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A1CF92040C21C0033D60D /* Foundation.swift */; };
+		794A1D5D2041931D0033D60D /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A1D5B2041931D0033D60D /* CommentViewController.swift */; };
+		794A1D5E2041931D0033D60D /* CommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 794A1D5C2041931D0033D60D /* CommentViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,8 @@
 		794A1CF52040BC3D0033D60D /* FileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTableViewCell.swift; sourceTree = "<group>"; };
 		794A1CF62040BC3D0033D60D /* FileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileTableViewCell.xib; sourceTree = "<group>"; };
 		794A1CF92040C21C0033D60D /* Foundation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foundation.swift; sourceTree = "<group>"; };
+		794A1D5B2041931D0033D60D /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
+		794A1D5C2041931D0033D60D /* CommentViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +112,7 @@
 				794A1CC62040B72D0033D60D /* Failed */,
 				794A1CCC2040B72D0033D60D /* Loading */,
 				794A1CD62040B7390033D60D /* Supporting */,
+				794A1D5F204193220033D60D /* Comment */,
 			);
 			path = FilesBrowser;
 			sourceTree = "<group>";
@@ -133,8 +138,8 @@
 		794A1CCC2040B72D0033D60D /* Loading */ = {
 			isa = PBXGroup;
 			children = (
-				794A1CCD2040B72D0033D60D /* LoadingViewController.xib */,
 				794A1CCE2040B72D0033D60D /* LoadingViewController.swift */,
+				794A1CCD2040B72D0033D60D /* LoadingViewController.xib */,
 			);
 			path = Loading;
 			sourceTree = "<group>";
@@ -182,6 +187,15 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		794A1D5F204193220033D60D /* Comment */ = {
+			isa = PBXGroup;
+			children = (
+				794A1D5B2041931D0033D60D /* CommentViewController.swift */,
+				794A1D5C2041931D0033D60D /* CommentViewController.xib */,
+			);
+			path = Comment;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -290,6 +304,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				794A1D5E2041931D0033D60D /* CommentViewController.xib in Resources */,
 				794A1CD42040B72D0033D60D /* LoadingViewController.xib in Resources */,
 				794A1CF82040BC3D0033D60D /* FileTableViewCell.xib in Resources */,
 				794A1CD12040B72D0033D60D /* FailedViewController.xib in Resources */,
@@ -303,6 +318,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				794A1D5D2041931D0033D60D /* CommentViewController.swift in Sources */,
 				794A1CCF2040B72D0033D60D /* Transition.swift in Sources */,
 				794A1CF72040BC3D0033D60D /* FileTableViewCell.swift in Sources */,
 				794A1CFA2040C21C0033D60D /* Foundation.swift in Sources */,

@@ -9,6 +9,10 @@
 import UIKit
 
 class LoadingViewController: UIViewController {
-    init() { super.init(nibName: nil, bundle: nil) }
+    init() {
+        let bundle = Bundle(for: LoadingViewController.self)
+        super.init(nibName: nil, bundle: bundle)
+    }
+    
     required init?(coder aDecoder: NSCoder) { fatalError("die") }
 }
