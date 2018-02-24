@@ -35,6 +35,7 @@ public class FilesFlowViewController: UIViewController, FilesViewControllerType,
     public weak var delegate: FilesFlowControllerDelegate?
     
     public var sort: FileObjectSorting?
+    public var filterHandler: ((_ isIncluded: FileObject) -> Bool)?
     
     public var loadingStatus: LoadingStatus = .notLoaded
     weak var currentPresentedController: FilesViewControllerType?
@@ -139,10 +140,11 @@ public class FilesFlowViewController: UIViewController, FilesViewControllerType,
             }
             
             let sorted = self.sort?.sort(files) ?? files
+            let filtered = self.filterHandler.map( { sorted.filter($0) } ) ?? files
             
             DispatchQueue.main.async {
                 self.loadingStatus = .succeed
-                self.files = sorted
+                self.files = filtered
                 self.reloadFiles()
             }
         }
