@@ -17,6 +17,7 @@ class ProvidersTableViewController: UITableViewController {
         WebDAVFileProvider.type,
         "FTP Passive",
         "FTP Active",
+        DropboxFileProvider.type,
     ]
     
     override func viewDidLoad() {
@@ -71,12 +72,11 @@ class ProvidersTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         switch providers[indexPath.row] {
         case "Documents":
             let provider = LocalFileProvider()
-            let flowVC = FilesFlowViewController(provider: provider, current: nil, presentingStyle: .simpleTableView, delegate: nil)
-            let filesVC = FilesViewController(flowViewController: flowVC)
-            self.navigationController?.pushViewController(filesVC, animated: true)
+            self.presentProvider(provider)
         case WebDAVFileProvider.type:
             let url: URL? = nil
             let user: String? = nil
@@ -86,10 +86,7 @@ class ProvidersTableViewController: UITableViewController {
                 guard let url = url,  let provider = WebDAVFileProvider(baseURL: url, credential: credential) else {
                     return
                 }
-               
-                let flowVC = FilesFlowViewController(provider: provider, current: nil, presentingStyle: .simpleTableView, delegate: nil)
-                let filesVC = FilesViewController(flowViewController: flowVC)
-                self.navigationController?.pushViewController(filesVC, animated: true)
+                self.presentProvider(provider)
             })
         case "FTP Passive":
             let url = URL(string: "ftp://speedtest.tele2.net")!
@@ -98,9 +95,7 @@ class ProvidersTableViewController: UITableViewController {
                 guard let url = url, let provider = FTPFileProvider(baseURL: url, passive: true, credential: credential) else {
                     return
                 }
-                let flowVC = FilesFlowViewController(provider: provider, current: nil, presentingStyle: .simpleTableView, delegate: nil)
-                let filesVC = FilesViewController(flowViewController: flowVC)
-                self.navigationController?.pushViewController(filesVC, animated: true)
+                self.presentProvider(provider)
             })
         case "FTP Active":
             let url = URL(string: "ftp://speedtest.tele2.net")!
@@ -109,13 +104,39 @@ class ProvidersTableViewController: UITableViewController {
                 guard let url = url, let provider = FTPFileProvider(baseURL: url, passive: false, credential: credential) else {
                     return
                 }
-                let flowVC = FilesFlowViewController(provider: provider, current: nil, presentingStyle: .simpleTableView, delegate: nil)
-                let filesVC = FilesViewController(flowViewController: flowVC)
-                self.navigationController?.pushViewController(filesVC, animated: true)
+                self.presentProvider(provider)
             })
+        case DropboxFileProvider.type:
+            let alert = UIAlertController(title: "Enter Dropbox token", message: "Get token from https://www.dropbox.com/developers/", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction.init(title: "OK", style: .default, handler: { [unowned alert] _ in
+                guard let token = alert.textFields![2].text else {
+                    return
+                }
+                let credential = URLCredential(user: "user", password: token, persistence: .forSession)
+                let provider = DropboxFileProvider(credential: credential)
+                self.presentProvider(provider)
+            }))
+            alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+            
+            alert.addTextField { (textField) in
+                textField.placeholder = "token"
+                textField.isSecureTextEntry = true
+            }
+            
+            self.present(alert, animated: true, completion: nil)
         default:
             break
         }
+    }
+    
+    func presentProvider(_ provider: FileProvider) {
+        let sortOption = FileObjectSorting.init(type: .name, ascending: true, isDirectoriesFirst: true)
+        let browserVC = FilesBrowserController(provider: provider, current: nil, presentingStyle: .simpleTableView, delegate: nil)
+        browserVC.sort = sortOption
+        
+        let filesVC = FilesViewController(browserController: browserVC)
+        self.navigationController?.pushViewController(filesVC, animated: true)
     }
     
     func askCredentials(defaultServer: URL? = nil, defaultUser: String? = nil, defaultPassword: String? = nil, completionHandler: @escaping (_ server: URL?, _ user: String, _ passwd: String) -> Void) {
@@ -147,8 +168,6 @@ class ProvidersTableViewController: UITableViewController {
         
         self.present(alert, animated: true, completion: nil)
     }
-    
-    
     
     /*
     // MARK: - Navigation

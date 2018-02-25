@@ -2,8 +2,7 @@
 //  FileTableViewCell.swift
 //  FilesBrowser
 //
-//  Created by Amir Abbas on 12/5/1396 AP.
-//  Copyright © 1396 AP Mousavian. All rights reserved.
+//  Copyright © 2018 Mousavian. All rights reserved.
 //
 
 import UIKit

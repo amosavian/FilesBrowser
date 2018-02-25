@@ -2,8 +2,7 @@
 //  FilesTableViewController.swift
 //  FilesBrowser
 //
-//  Created by Amir Abbas on 12/5/1396 AP.
-//  Copyright © 1396 AP Mousavian. All rights reserved.
+//  Copyright © 2018 Mousavian. All rights reserved.
 //
 
 import UIKit
@@ -112,7 +111,10 @@ class FilesTableViewController: UITableViewController, UITableViewDataSourcePref
         
         // Configure the cell...
         cell.fileName.text = file.name
-        cell.fileDescription.text = file.isDirectory ? "Folder" : file.size.formatByte
+        let typeDesc = file.isDirectory ? "Folder" : file.size.formatByte
+        let dateDesc = (file.modifiedDate?.format(dateStyle: .medium, timeStyle: .none, separator: "")).map { ", \($0)" } ?? ""
+        cell.fileDescription.text = "\(typeDesc)\(dateDesc)"
+        
         let bundle = Bundle(for: FilesTableViewController.self)
         if file.isDirectory {
             cell.fileImageView.image = UIImage.init(named: "GeneralFolder", in: bundle, compatibleWith: nil)

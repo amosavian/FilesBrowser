@@ -14,13 +14,13 @@
 		794A1CD42040B72D0033D60D /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 794A1CCD2040B72D0033D60D /* LoadingViewController.xib */; };
 		794A1CD52040B72D0033D60D /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A1CCE2040B72D0033D60D /* LoadingViewController.swift */; };
 		794A1CD92040B7A00033D60D /* FilesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A1CD72040B7A00033D60D /* FilesTableViewController.swift */; };
-		794A1CE02040B80B0033D60D /* FilesFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A1CDE2040B80B0033D60D /* FilesFlowViewController.swift */; };
+		794A1CE02040B80B0033D60D /* FilesBrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A1CDE2040B80B0033D60D /* FilesBrowserController.swift */; };
 		794A1CF72040BC3D0033D60D /* FileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A1CF52040BC3D0033D60D /* FileTableViewCell.swift */; };
 		794A1CF82040BC3D0033D60D /* FileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 794A1CF62040BC3D0033D60D /* FileTableViewCell.xib */; };
 		794A1CFA2040C21C0033D60D /* Foundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A1CF92040C21C0033D60D /* Foundation.swift */; };
 		794A1D5D2041931D0033D60D /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A1D5B2041931D0033D60D /* CommentViewController.swift */; };
 		794A1D5E2041931D0033D60D /* CommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 794A1D5C2041931D0033D60D /* CommentViewController.xib */; };
-		794A1D6A2041ADB00033D60D /* FilesFlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A1D692041ADB00033D60D /* FilesFlowDelegate.swift */; };
+		794A1D6A2041ADB00033D60D /* FilesBrowserDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A1D692041ADB00033D60D /* FilesBrowserDelegates.swift */; };
 		794A1D6C2041F0AC0033D60D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 794A1D6B2041F0AC0033D60D /* Assets.xcassets */; };
 		794A1D7C2041FF360033D60D /* FilesProvider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794A1D752041FF2E0033D60D /* FilesProvider.framework */; };
 		794A1D9220420BDC0033D60D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794A1D8D20420BDC0033D60D /* MobileCoreServices.framework */; };
@@ -68,13 +68,13 @@
 		794A1CCD2040B72D0033D60D /* LoadingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingViewController.xib; sourceTree = "<group>"; };
 		794A1CCE2040B72D0033D60D /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		794A1CD72040B7A00033D60D /* FilesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesTableViewController.swift; sourceTree = "<group>"; };
-		794A1CDE2040B80B0033D60D /* FilesFlowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesFlowViewController.swift; sourceTree = "<group>"; };
+		794A1CDE2040B80B0033D60D /* FilesBrowserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesBrowserController.swift; sourceTree = "<group>"; };
 		794A1CF52040BC3D0033D60D /* FileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTableViewCell.swift; sourceTree = "<group>"; };
 		794A1CF62040BC3D0033D60D /* FileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileTableViewCell.xib; sourceTree = "<group>"; };
 		794A1CF92040C21C0033D60D /* Foundation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foundation.swift; sourceTree = "<group>"; };
 		794A1D5B2041931D0033D60D /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		794A1D5C2041931D0033D60D /* CommentViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentViewController.xib; sourceTree = "<group>"; };
-		794A1D692041ADB00033D60D /* FilesFlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesFlowDelegate.swift; sourceTree = "<group>"; };
+		794A1D692041ADB00033D60D /* FilesBrowserDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesBrowserDelegates.swift; sourceTree = "<group>"; };
 		794A1D6B2041F0AC0033D60D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		794A1D6D2041FF2E0033D60D /* FilesProvider.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FilesProvider.xcodeproj; path = FileProvider/FilesProvider.xcodeproj; sourceTree = "<group>"; };
 		794A1D8D20420BDC0033D60D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -177,8 +177,8 @@
 		794A1CE32040B83A0033D60D /* FilesFlow */ = {
 			isa = PBXGroup;
 			children = (
-				794A1CDE2040B80B0033D60D /* FilesFlowViewController.swift */,
-				794A1D692041ADB00033D60D /* FilesFlowDelegate.swift */,
+				794A1CDE2040B80B0033D60D /* FilesBrowserController.swift */,
+				794A1D692041ADB00033D60D /* FilesBrowserDelegates.swift */,
 			);
 			path = FilesFlow;
 			sourceTree = "<group>";
@@ -334,11 +334,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				794A1D5D2041931D0033D60D /* CommentViewController.swift in Sources */,
-				794A1D6A2041ADB00033D60D /* FilesFlowDelegate.swift in Sources */,
+				794A1D6A2041ADB00033D60D /* FilesBrowserDelegates.swift in Sources */,
 				794A1CCF2040B72D0033D60D /* Transition.swift in Sources */,
 				794A1CF72040BC3D0033D60D /* FileTableViewCell.swift in Sources */,
 				794A1CFA2040C21C0033D60D /* Foundation.swift in Sources */,
-				794A1CE02040B80B0033D60D /* FilesFlowViewController.swift in Sources */,
+				794A1CE02040B80B0033D60D /* FilesBrowserController.swift in Sources */,
 				794A1CD92040B7A00033D60D /* FilesTableViewController.swift in Sources */,
 				794A1CD02040B72D0033D60D /* FailedViewController.swift in Sources */,
 				794A1CD52040B72D0033D60D /* LoadingViewController.swift in Sources */,

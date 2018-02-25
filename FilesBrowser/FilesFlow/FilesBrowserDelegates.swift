@@ -1,9 +1,8 @@
 //
-//  FilesFlowDelegate.swift
+//  FilesBrowserDelegates
 //  FilesBrowser
 //
-//  Created by Amir Abbas on 12/5/1396 AP.
-//  Copyright © 1396 AP Mousavian. All rights reserved.
+//  Copyright © 2018 Mousavian. All rights reserved.
 //
 
 import Foundation
@@ -17,10 +16,12 @@ public protocol FilesViewControllerType: class {
     var selectedIndices: [Int] { get set }
 }
 
-public protocol FilesFlowControllerDelegate: class {
-    func filesFlow(_ filesVC: FilesFlowViewController, presentFile file: FileObject, anchor: AnchorView)
-    func filesFlow(_ filesVC: FilesFlowViewController, selectionChangedTo files: [FileObject])
-    func filesFlow(_ filesVC: FilesFlowViewController, updateToolbarItems items: [UIBarButtonItem])
+public protocol FilesBrowserControllerDelegate: class {
+    func filesBrowser(_ filesBrowser: FilesBrowserController, present file: FileObject, anchor: AnchorView)
+    func filesBrowser(_ filesBrowser: FilesBrowserController, selectionChangedTo files: [FileObject])
+    
+    func filesBrowser(_ filesBrowser: FilesBrowserController, filesListUpdated files: [FileObject])
+    func filesBrowser(_ filesBrowser: FilesBrowserController, loadingStatusDidBecame status: FilesBrowserController.LoadingStatus)
 }
 
 internal protocol FilesViewControllerDelegate: class {

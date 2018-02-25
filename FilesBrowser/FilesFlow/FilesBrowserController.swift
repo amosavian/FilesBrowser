@@ -1,9 +1,8 @@
 //
-//  FilesFlowViewController.swift
+//  FilesBrowserController.swift
 //  FilesBrowser
 //
-//  Created by Amir Abbas on 12/5/1396 AP.
-//  Copyright © 1396 AP Mousavian. All rights reserved.
+//  Copyright © 2018 Mousavian. All rights reserved.
 //
 
 import UIKit
@@ -17,7 +16,7 @@ public enum AnchorView {
 
 var docic = UIDocumentInteractionController()
 
-public class FilesFlowViewController: UIViewController, FilesViewControllerType, FilesViewControllerDelegate, FileProviderDelegate, FailedViewControllerDelegate {
+public class FilesBrowserController: UIViewController, FilesViewControllerType, FilesViewControllerDelegate, FileProviderDelegate, FailedViewControllerDelegate {
     
     public enum LoadingStatus {
         case notLoaded
@@ -32,14 +31,22 @@ public class FilesFlowViewController: UIViewController, FilesViewControllerType,
     
     public let provider: FileProvider
     public let current: FileObject?
-    public weak var delegate: FilesFlowControllerDelegate?
+    public weak var delegate: FilesBrowserControllerDelegate?
     
     public var sort: FileObjectSorting?
     public var filterHandler: ((_ isIncluded: FileObject) -> Bool)?
     
-    public var loadingStatus: LoadingStatus = .notLoaded
-    weak var currentPresentedController: FilesViewControllerType?
-    public var files: [FileObject] = []
+    public var loadingStatus: LoadingStatus = .notLoaded {
+        didSet {
+            delegate?.filesBrowser(self, loadingStatusDidBecame: loadingStatus)
+        }
+    }
+    
+    public var files: [FileObject] = [] {
+        didSet {
+            delegate?.filesBrowser(self, filesListUpdated: files)
+        }
+    }
     
     public var presentingStyle: PresentingStyle {
         didSet {
@@ -66,13 +73,15 @@ public class FilesFlowViewController: UIViewController, FilesViewControllerType,
         }
     }
     
-    public init(provider: FileProvider, current: FileObject?, presentingStyle: PresentingStyle, delegate: FilesFlowControllerDelegate?) {
+    weak var currentPresentedController: FilesViewControllerType?
+    
+    public init(provider: FileProvider, current: FileObject?, presentingStyle: PresentingStyle, delegate: FilesBrowserControllerDelegate?) {
         self.provider = provider
         self.current = current
         self.presentingStyle = presentingStyle
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
-        
+        self.title = current?.name ?? provider.type
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -83,8 +92,6 @@ public class FilesFlowViewController: UIViewController, FilesViewControllerType,
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        
-        self.title = current?.name
         view.backgroundColor = .white
         provider.delegate = self
     }
@@ -129,8 +136,8 @@ public class FilesFlowViewController: UIViewController, FilesViewControllerType,
         provider.contentsOfDirectory(path: current?.path ?? "") { (files, error) in
             if let error = error {
                 DispatchQueue.main.async {
-                    self.loadingStatus = .failed
                     self.setToolbarItems([], animated: true)
+                    self.loadingStatus = .failed
                     let failedVC = FailedViewController(message: error.localizedDescription)
                     failedVC.delegate = self
                     self.transition(child: failedVC)
@@ -140,9 +147,10 @@ public class FilesFlowViewController: UIViewController, FilesViewControllerType,
             }
             
             let sorted = self.sort?.sort(files) ?? files
-            let filtered = self.filterHandler.map( { sorted.filter($0) } ) ?? files
+            let filtered = self.filterHandler.map( { sorted.filter($0) } ) ?? sorted
             
             DispatchQueue.main.async {
+                self.setToolbarItems(self.instantiateToolbarItems(), animated: true)
                 self.loadingStatus = .succeed
                 self.files = filtered
                 self.reloadFiles()
@@ -161,8 +169,6 @@ public class FilesFlowViewController: UIViewController, FilesViewControllerType,
     }
     
     fileprivate func togglePresentation(to style: PresentingStyle?) {
-        setToolbarItems(instantiateToolbarItems(), animated: true)
-        
         guard !files.isEmpty else {
             let nofileVC = CommentViewController(message: NSLocalizedString("No file exists.", comment: "Files view"))
             self.transition(child: nofileVC)
@@ -208,15 +214,15 @@ public class FilesFlowViewController: UIViewController, FilesViewControllerType,
     
     public func filesView(_ filesVC: FilesViewControllerType, didSelected file: FileObject, anchor: AnchorView) {
         if self.isEditing {
-            delegate?.filesFlow(self, selectionChangedTo: self.selectedFiles)
+            delegate?.filesBrowser(self, selectionChangedTo: self.selectedFiles)
         } else {
-            delegate?.filesFlow(self, presentFile: file, anchor: anchor)
+            delegate?.filesBrowser(self, present: file, anchor: anchor)
         }
     }
     
     func filesView(_ filesVC: FilesViewControllerType, didDeselected file: FileObject, anchor: AnchorView) {
         if self.isEditing {
-            delegate?.filesFlow(self, selectionChangedTo: self.selectedFiles)
+            delegate?.filesBrowser(self, selectionChangedTo: self.selectedFiles)
         }
     }
     
@@ -267,12 +273,17 @@ public class FilesFlowViewController: UIViewController, FilesViewControllerType,
         //
     }
     
+    var toolbarAddButton: UIBarButtonItem?
+    var toolbarActionButton: UIBarButtonItem?
+    var toolbarTrashButton: UIBarButtonItem?
+    
     func instantiateToolbarItems() -> [UIBarButtonItem] {
-        let addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createFolder(_:)))
-        let trashBtn = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(trash(_:)))
+        toolbarAddButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createFolder(_:)))
+        toolbarActionButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(action(_:)))
+        toolbarTrashButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(trash(_:)))
         //trashBtn.tintColor = .red
         let space = UIBarButtonItem.init(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        return [addBtn, space, trashBtn]
+        return [toolbarAddButton!, space, toolbarActionButton!, space, toolbarTrashButton!]
     }
     
     @objc func createFolder(_ sender: UIBarButtonItem) {
@@ -292,15 +303,14 @@ public class FilesFlowViewController: UIViewController, FilesViewControllerType,
         self.present(alert, animated: true, completion: nil)
     }
     
+    @objc func action(_ sender: UIBarButtonItem) {
+        //
+    }
+    
     @objc func trash(_ sender: UIBarButtonItem) {
         for file in self.selectedFiles {
             provider.removeItem(path: file.path, completionHandler: nil)
         }
-    }
-    
-    override public func setToolbarItems(_ toolbarItems: [UIBarButtonItem]?, animated: Bool) {
-        self.delegate?.filesFlow(self, updateToolbarItems: toolbarItems ?? [])
-        super.setToolbarItems(toolbarItems, animated: animated)
     }
     
     /*

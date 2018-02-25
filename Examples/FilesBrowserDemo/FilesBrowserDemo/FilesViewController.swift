@@ -11,17 +11,18 @@ import FilesProvider
 import FilesBrowser
 import QuickLook
 
-class FilesViewController: UIViewController, FilesFlowControllerDelegate, QLPreviewControllerDataSource, QLPreviewControllerDelegate {
+class FilesViewController: UIViewController, FilesBrowserControllerDelegate, QLPreviewControllerDataSource, QLPreviewControllerDelegate {
     
-    var flowViewController: FilesFlowViewController
+    var browserController: FilesBrowserController
     
     var quickLook: QLPreviewController?
     var quickLookItems: [(file: FileObject, anchor: AnchorView?)] = []
     
-    init(flowViewController: FilesFlowViewController) {
-        self.flowViewController = flowViewController
+    init(browserController: FilesBrowserController) {
+        self.browserController = browserController
         let bundle = Bundle(for: FilesViewController.self)
         super.init(nibName: nil, bundle: bundle)
+        self.navigationItem.title = browserController.title
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -32,9 +33,8 @@ class FilesViewController: UIViewController, FilesFlowControllerDelegate, QLPrev
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
-        flowViewController.delegate = self
-        self.transition(child: flowViewController)
+        browserController.delegate = self
+        self.transition(child: browserController)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,30 +56,43 @@ class FilesViewController: UIViewController, FilesFlowControllerDelegate, QLPrev
         super.setEditing(editing, animated: animated)
     }
     
-    func filesFlow(_ filesVC: FilesFlowViewController, presentFile file: FileObject, anchor: AnchorView) {
+    func filesBrowser(_ filesVC: FilesBrowserController, present file: FileObject, anchor: AnchorView) {
         if file.isDirectory {
-            let directoryVC = FilesFlowViewController(provider: filesVC.provider, current: file, presentingStyle: filesVC.presentingStyle, delegate: filesVC.delegate)
-            navigationController?.pushViewController(directoryVC, animated: true)
+            let browserVC = FilesBrowserController(provider: filesVC.provider, current: file, presentingStyle: filesVC.presentingStyle, delegate: filesVC.delegate)
+            browserVC.sort = filesVC.sort
+            let filesVC = FilesViewController(browserController: browserVC)
+            self.navigationController?.pushViewController(filesVC, animated: true)
         } else if file.url.isFileURL, QLPreviewController.canPreview(file.url.absoluteURL as QLPreviewItem) {
             quickLookItems = [(file, anchor)]
             self.quickLook = QLPreviewController()
             quickLook!.dataSource = self
+            quickLook!.delegate = self
             self.present(quickLook!, animated: true, completion: nil)
         }
     }
     
-    func filesFlow(_ filesVC: FilesFlowViewController, selectionChangedTo files: [FileObject]) {
+    func filesBrowser(_ filesBrowser: FilesBrowserController, selectionChangedTo files: [FileObject]) {
         //
     }
     
-    func filesFlow(_ filesVC: FilesFlowViewController, updateToolbarItems items: [UIBarButtonItem]) {
-        self.setToolbarItems(items, animated: true)
+    func filesBrowser(_ filesBrowser: FilesBrowserController, filesListUpdated files: [FileObject]) {
+        //
     }
-
+    
+    func filesBrowser(_ filesBrowser: FilesBrowserController, loadingStatusDidBecame status: FilesBrowserController.LoadingStatus) {
+        switch status {
+        case .succeed:
+            self.navigationItem.rightBarButtonItem = self.editButtonItem
+            self.setToolbarItems(filesBrowser.toolbarItems, animated: true)
+        default:
+            self.navigationItem.rightBarButtonItem = nil
+        }
+    }
     
     // MARK: - QuickLook
     
     func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+        // QuickLook bug prevents previewing relative urls. So absolute url is being passed
         return quickLookItems[index].file.url.absoluteURL as QLPreviewItem
     }
     
@@ -92,8 +105,20 @@ class FilesViewController: UIViewController, FilesFlowControllerDelegate, QLPrev
     }
     
     /*func previewController(_ controller: QLPreviewController, transitionImageFor item: QLPreviewItem, contentRect: UnsafeMutablePointer<CGRect>) -> UIImage {
-     //
-     }*/
+        guard let anchor = quickLookItems.first(where: { $0.file.url.absoluteURL == item.previewItemURL })?.anchor else {
+            return UIImage()
+        }
+        
+        switch anchor {
+        case .view(view: let view), .viewWithFrame(view: let view, frame: _):
+            for subview in view.subviews where subview is UIImageView {
+                return (subview as! UIImageView).image ?? UIImage()
+            }
+        default:
+            break
+        }
+        return UIImage()
+    }*/
     
     func previewController(_ controller: QLPreviewController, transitionViewFor item: QLPreviewItem) -> UIView? {
         guard let anchor = quickLookItems.first(where: { $0.file.url.absoluteURL == item.previewItemURL })?.anchor else {
@@ -102,6 +127,12 @@ class FilesViewController: UIViewController, FilesFlowControllerDelegate, QLPrev
         
         switch anchor {
         case .view(view: let view):
+            var view = view
+            // Passing image view instead of entire cell
+            for subview in view.subviews where subview is UIImageView {
+                view = subview
+                break
+            }
             return view
         case .viewWithFrame(view: let view, frame: _):
             return view
